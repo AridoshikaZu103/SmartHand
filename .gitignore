@@ -1,0 +1,7 @@
+game.py
+game.spec
+game_rebuild.ps1
+build/
+dist/
+__pycache__/
+*.pyc
