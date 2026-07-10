@@ -14,11 +14,23 @@ Control your entire computer operating system using in-air, high-speed hand gest
 ---
 
 ## 🧠 The "60" Coincidence
+
+![MediaPipe Hand Landmarks](Images/hand-landmarks.png)
+
 When both your hands are on the screen, the AI tracks **42 physical landmarks** (21 joints per hand) in 3D space. By using these 42 landmarks, this application currently supports exactly **60 unique hand gestures** (15 Right, 15 Left, and 30 Dual-Hand combos) to control your PC!
 
 ## 🖐️ Gesture Map
 
 > **Note:** A "Neutral" state (all fingers open or all fingers completely closed into a fist) on your dominant hand performs no actions.
+
+### 📸 Reference Postures
+
+To ensure maximum tracking accuracy, please refer to the correct hand posture and dorsal angles below when using the application:
+
+<p align="center">
+  <img src="Images/CORRECT%20HAND%20POSTURE.png" alt="Correct Hand Posture" width="48%">
+  <img src="Images/(dorsal%20side)%20of%20both%20hands.png" alt="Dorsal Side of Both Hands" width="48%">
+</p>
 
 ### ➡️ Right Hand (Primary Controls)
 
