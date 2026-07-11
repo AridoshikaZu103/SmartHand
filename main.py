@@ -556,14 +556,14 @@ def get_hardware_stats():
     try:
         gpus = GPUtil.getGPUs()
         if gpus:
-            gpu_name = f"GPU {gpus[0].id}"
+            gpu_name = f"{gpus[0].name}"[:15] # Truncate long names to fit OSD
             gpu_mem = f"{int(gpus[0].memoryUsed)} MB"
         else:
-            gpu_name = "Intel UHD 620"
-            gpu_mem = "128 MB"
+            gpu_name = "Primary GPU"
+            gpu_mem = "N/A"
     except Exception:
-        gpu_name = "Intel UHD 620"
-        gpu_mem = "128 MB"
+        gpu_name = "Primary GPU"
+        gpu_mem = "N/A"
             
     return cpu_util, mem_used_mb, gpu_name, gpu_mem
 
