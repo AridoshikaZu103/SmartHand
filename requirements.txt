@@ -1,6 +1,17 @@
+# ==============================================================================
+# SmartHand - Python Dependencies
+# ==============================================================================
+
+# Computer Vision & AI Models
 opencv-python
 mediapipe
+
+# Math & Data Processing
 numpy
+
+# System Interaction (Keyboard/Mouse Control)
 pyautogui
+
+# Hardware Monitoring (HUD Statistics)
 GPUtil
 psutil
