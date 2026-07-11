@@ -753,6 +753,9 @@ def main():
     gestures_active = True
     
     screen_w, screen_h = pyautogui.size()
+    
+    PROCESS_EVERY_Nth_FRAME = 2
+    frame_count = 0
 
     while True:
         if not camera_active:
@@ -788,6 +791,10 @@ def main():
         success, img = cap.read()
         if not success:
             continue
+            
+        frame_count += 1
+        if frame_count % PROCESS_EVERY_Nth_FRAME != 0:
+            continue # Skip heavy processing and RAM storage for this frame
 
         # Force resize to w x h to drastically speed up processing 
         # (in case the camera ignores cap.set and feeds 1080p HD)
@@ -919,6 +926,13 @@ def main():
         set_window_icon("SmartHand AI Controller")
 
         key = cv2.waitKey(1) & 0xFF
+        
+        # DEBOUNCE: If we just simulated a keystroke via pyautogui within the last 0.3 seconds,
+        # ignore the cv2.waitKey input to prevent the app from instantly killing itself
+        # by reading its own injected 'x' or 'z' keys!
+        if (time.time() - last_action_time) < 0.3:
+            key = 255 # Clear the key
+            
         if key == ord('x'):
             break
         elif key == ord('z'):
