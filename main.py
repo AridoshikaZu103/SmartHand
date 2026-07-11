@@ -201,15 +201,14 @@ class GestureController:
                 # -------------------------
 
                 if draw:
-                    # Draw custom X-RAY bones (cyan)
-                    if self.hand_connections:
-                        for connection in self.hand_connections:
-                            start_idx = connection.start
-                            end_idx = connection.end
-                            if start_idx < len(hand_landmarks) and end_idx < len(hand_landmarks):
-                                start_pt = (int(hand_landmarks[start_idx].x * w), int(hand_landmarks[start_idx].y * h))
-                                end_pt = (int(hand_landmarks[end_idx].x * w), int(hand_landmarks[end_idx].y * h))
-                                cv2.line(frame, start_pt, end_pt, (255, 255, 0), 2, cv2.LINE_AA) # Cyan bones
+                    # Draw custom X-RAY bones using MediaPipe drawing_utils
+                    drawing_utils.draw_landmarks(
+                        frame,
+                        hand_landmarks,
+                        self.hand_connections,
+                        drawing_utils.DrawingSpec(color=(255, 200, 0), thickness=2, circle_radius=4), # Inner joints (cyan-ish)
+                        drawing_utils.DrawingSpec(color=(255, 255, 0), thickness=2) # Bones (cyan)
+                    )
 
                 coord_x_list = []
                 coord_y_list = []
@@ -219,10 +218,6 @@ class GestureController:
                     coord_x_list.append(px)
                     coord_y_list.append(py)
                     landmark_list.append([idx, px, py])
-                    if draw:
-                        # Draw glowing joints
-                        cv2.circle(frame, (px, py), 6, (255, 200, 0), cv2.FILLED) # Outer glow
-                        cv2.circle(frame, (px, py), 3, (255, 255, 255), cv2.FILLED) # Inner core
 
                 if draw and coord_x_list:
                     x_min, x_max = min(coord_x_list), max(coord_x_list)
