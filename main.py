@@ -204,8 +204,8 @@ class GestureController:
                     # Draw custom X-RAY bones (cyan)
                     if self.hand_connections:
                         for connection in self.hand_connections:
-                            start_idx = connection[0]
-                            end_idx = connection[1]
+                            start_idx = connection.start
+                            end_idx = connection.end
                             if start_idx < len(hand_landmarks) and end_idx < len(hand_landmarks):
                                 start_pt = (int(hand_landmarks[start_idx].x * w), int(hand_landmarks[start_idx].y * h))
                                 end_pt = (int(hand_landmarks[end_idx].x * w), int(hand_landmarks[end_idx].y * h))
@@ -930,8 +930,8 @@ def main():
         # DEBOUNCE: If we just simulated a keystroke via pyautogui within the last 0.3 seconds,
         # ignore the cv2.waitKey input to prevent the app from instantly killing itself
         # by reading its own injected 'x' or 'z' keys!
-        #if (time.time() - last_action_time) < 0.3:
-        #    key = 255 # Clear the key
+        if (time.time() - last_action_time) < 0.3:
+            key = 255 # Clear the key
             
         if key == ord('x'):
             break
