@@ -123,6 +123,8 @@ The easiest way to use SmartHand on any Windows PC is to simply download the pre
 1. Go to the **Releases** section on the right side of this GitHub repository page.
 2. Download the latest `main.exe` file.
 3. Right-click `main.exe` and select **"Run as administrator"** *(This is required for the hand gestures to control your keyboard globally!)*
+> ⏳ **Please be patient!** The 3D AI models are very large, so it is completely normal for `main.exe` to take **10 to 20 seconds** to load and appear on your screen after clicking.
+
 *(Note: Because this is a custom executable, Windows Defender might show a "Windows protected your PC" popup. Just click **More info** -> **Run anyway**).*
 
 ---
@@ -170,6 +172,8 @@ To build the application into a standalone Windows `.exe` that doesn't require P
 ```powershell
 .\rebuild.ps1
 ```
+> ⏳ **Note:** This process bundles massive AI models and libraries into a single file. It is completely normal for this to take **4 to 5 minutes**. Do not close the terminal!
+
 _The `hand_landmarker.task` AI model is automatically bundled directly into the executable by PyInstaller!_
 
 ---
