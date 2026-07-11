@@ -176,6 +176,30 @@ class GestureController:
                 if self.latest_result.handedness and len(self.latest_result.handedness) > i:
                     handedness = self.latest_result.handedness[i][0].category_name
 
+                # --- FRONT/BACK FILTER ---
+                # Only allow gestures and landmarks when the BACK of the hand is facing the camera.
+                # We calculate the 2D cross product of the Wrist->Index and Wrist->Pinky vectors.
+                wrist = hand_landmarks[0]
+                index_mcp = hand_landmarks[5]
+                pinky_mcp = hand_landmarks[17]
+                
+                v1_x = index_mcp.x - wrist.x
+                v1_y = index_mcp.y - wrist.y
+                v2_x = pinky_mcp.x - wrist.x
+                v2_y = pinky_mcp.y - wrist.y
+                
+                cross_product = (v1_x * v2_y) - (v1_y * v2_x)
+                
+                is_back_of_hand = False
+                if handedness == "Right" and cross_product < 0:
+                    is_back_of_hand = True
+                elif handedness == "Left" and cross_product > 0:
+                    is_back_of_hand = True
+                    
+                if not is_back_of_hand:
+                    continue  # Ignore the hand entirely! (No landmarks, no gestures)
+                # -------------------------
+
                 if draw:
                     drawing_utils.draw_landmarks(
                         frame, hand_landmarks, self.hand_connections
