@@ -21,14 +21,26 @@ ctypes.windll.shell32.SetCurrentProcessExplicitAppUserModelID(myappid)
 pyautogui.FAILSAFE = False
 pyautogui.PAUSE = 0
 
-# Path to the hand landmarker model (handles PyInstaller temp directory)
+# Path to the hand landmarker model and icon (handles PyInstaller temp directory)
 if getattr(sys, 'frozen', False):
     application_path = sys._MEIPASS
 else:
     application_path = os.path.dirname(os.path.abspath(__file__))
+    
 MODEL_PATH = os.path.join(application_path, "hand_landmarker.task")
+ICON_PATH = os.path.join(application_path, "icon.ico")
+
 # Hand landmark indices for fingertips
 FINGER_TIP_INDICES = [4, 8, 12, 16, 20]
+
+def set_window_icon(window_name):
+    """Forces Windows to apply the custom icon.ico to the OpenCV window."""
+    hwnd = ctypes.windll.user32.FindWindowW(None, window_name)
+    if hwnd:
+        hicon = ctypes.windll.user32.LoadImageW(0, ICON_PATH, 1, 0, 0, 0x0010)
+        if hicon:
+            ctypes.windll.user32.SendMessageW(hwnd, 0x0080, 0, hicon) # ICON_SMALL
+            ctypes.windll.user32.SendMessageW(hwnd, 0x0080, 1, hicon) # ICON_BIG
 
 # ─────────────────────────────────────────────────────────────
 # GESTURE MAP
@@ -725,6 +737,7 @@ def main():
                 cv2.putText(wait_img, "(takes ~10 seconds)", (w//2 - 110, h//2 + 20),
                             cv2.FONT_HERSHEY_SIMPLEX, 0.7, (0, 200, 255), 2)
                 cv2.imshow("SmartHand AI Controller", wait_img)
+                set_window_icon("SmartHand AI Controller")
                 cv2.waitKey(100)  # Force the window to render the text
                 
                 cap = WebcamVideoStream(src=0, width=w, height=h).start()
@@ -861,7 +874,8 @@ def main():
         draw_hud(img, gesture_name, hands_dict,
                  fps, hold_progress, is_cooldown, gestures_active)
 
-        cv2.imshow("SmartHand", img)
+        cv2.imshow("SmartHand AI Controller", img)
+        set_window_icon("SmartHand AI Controller")
 
         key = cv2.waitKey(1) & 0xFF
         if key == ord('x'):
