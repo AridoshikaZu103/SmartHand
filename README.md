@@ -149,7 +149,7 @@ Alternatively, copy the entire `SmartHand` folder to the new computer via a USB 
 *(Note: The `hand_landmarker.task` file is ~8MB and will be included automatically in the GitHub download. If sharing manually, you can safely delete the `dist` and `build` folders before sharing to save space, but you **MUST** include the `hand_landmarker.task` file as it contains the AI model!)*
 
 **Step 2: Install Python**
-1. Go to [python.org/downloads](https://www.python.org/downloads/) and download the latest version of Python for Windows (Python 3.14 or newer recommended).
+1. Go to [python.org/downloads](https://www.python.org/downloads/) and download the latest version of Python for Windows *(Any recent version of Python 3 will work perfectly!)*.
 2. Open the installer. **CRITICAL STEP:** Before clicking "Install Now", make sure to check the box at the bottom that says **"Add Python to PATH"**. If you forget this, the terminal commands won't work!
 3. Click "Install Now" and wait for it to finish.
 4. You can verify the installation by opening your terminal (or Command Prompt) and typing `python --version` to see the installed version.
@@ -168,9 +168,9 @@ pip install -r requirements.txt
 **Step 5: Run the App!**
 Once the installation finishes, you can start the application by typing:
 ```bash
-py main.py
+python main.py
 ```
-*(If that says command not found, try typing `python main.py` or `py -3.xx main.py` instead, replacing `xx` with your version).*
+*(If that says command not found, try typing `py main.py` instead).*
 
 That's it! The camera should light up and the AI gesture HUD will appear on the screen.
 
