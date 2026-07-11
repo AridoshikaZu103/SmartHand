@@ -455,7 +455,7 @@ def match_gesture(hands_dict):
 
         # Middle only -> z
         if thumb == 0 and index == 0 and middle == 1 and ring == 0 and pinky == 0:
-            return ("KEY 'z'", "key", "z")
+            return ("KEY 'z'", "hotkey", ["z"])
 
         # Index + Middle + Ring -> ctrl+f4
         if thumb == 0 and index == 1 and middle == 1 and ring == 1 and pinky == 0:
@@ -471,11 +471,11 @@ def match_gesture(hands_dict):
             
         # Thumb + Middle + Ring + Pinky -> esc
         if thumb == 1 and index == 0 and middle == 1 and ring == 1 and pinky == 1:
-            return ("ESCAPE", "key", "esc")
+            return ("ESCAPE", "hotkey", ["esc"])
             
         # Thumb + Pinky -> f5 (Refresh)
         if thumb == 1 and index == 0 and middle == 0 and ring == 0 and pinky == 1:
-            return ("REFRESH", "key", "f5")
+            return ("REFRESH", "hotkey", ["f5"])
             
         # Thumb + Middle + Pinky -> mouse right click
         if thumb == 1 and index == 0 and middle == 1 and ring == 0 and pinky == 1:
@@ -484,7 +484,7 @@ def match_gesture(hands_dict):
     elif handedness == "Left":
         # Index + Middle -> 'f' key
         if thumb == 0 and index == 1 and middle == 1 and ring == 0 and pinky == 0:
-            return ("KEY 'f'", "key", "f")
+            return ("KEY 'f'", "hotkey", ["f"])
 
         # Thumb + Index only -> Shift + N
         if thumb == 1 and index == 1 and middle == 0 and ring == 0 and pinky == 0:
@@ -496,7 +496,7 @@ def match_gesture(hands_dict):
 
         # Index only -> F11
         if thumb == 0 and index == 1 and middle == 0 and ring == 0 and pinky == 0:
-            return ("KEY 'F11'", "key", "f11")
+            return ("KEY 'F11'", "hotkey", ["f11"])
 
         # Thumb only -> win+d
         if thumb == 1 and index == 0 and middle == 0 and ring == 0 and pinky == 0:
@@ -532,7 +532,7 @@ def match_gesture(hands_dict):
 
         # Middle only -> x
         if thumb == 0 and index == 0 and middle == 1 and ring == 0 and pinky == 0:
-            return ("KEY 'x'", "key", "x")
+            return ("KEY 'x'", "hotkey", ["x"])
             
         # Thumb + Middle + Pinky -> mouse left click
         if thumb == 1 and index == 0 and middle == 1 and ring == 0 and pinky == 1:
@@ -930,8 +930,8 @@ def main():
         # DEBOUNCE: If we just simulated a keystroke via pyautogui within the last 0.3 seconds,
         # ignore the cv2.waitKey input to prevent the app from instantly killing itself
         # by reading its own injected 'x' or 'z' keys!
-        if (time.time() - last_action_time) < 0.3:
-            key = 255 # Clear the key
+        #if (time.time() - last_action_time) < 0.3:
+        #    key = 255 # Clear the key
             
         if key == ord('x'):
             break
