@@ -11,6 +11,7 @@ import time
 import os
 import ctypes
 import sys
+import threading
 
 # Disable pyautogui's pause and failsafe for responsive control
 pyautogui.FAILSAFE = False
@@ -80,6 +81,42 @@ FINGER_TIP_INDICES = [4, 8, 12, 16, 20]
 HOLD_FRAMES = 5
 # Cooldown in seconds after a gesture fires before it can fire again
 COOLDOWN_TIME = 1.0
+
+# ─────────────────────────────────────────────────────────────
+# Threaded Webcam Stream (FPS Lag & Memory Fix)
+# ─────────────────────────────────────────────────────────────
+class WebcamVideoStream:
+    def __init__(self, src=0, width=640, height=480):
+        self.stream = cv2.VideoCapture(src)
+        self.stream.set(cv2.CAP_PROP_FRAME_WIDTH, width)
+        self.stream.set(cv2.CAP_PROP_FRAME_HEIGHT, height)
+        self.stream.set(cv2.CAP_PROP_FPS, 30)
+        self.stream.set(cv2.CAP_PROP_BUFFERSIZE, 1)
+        self.stream.set(cv2.CAP_PROP_FOURCC, cv2.VideoWriter_fourcc(*'MJPG'))
+        (self.grabbed, self.frame) = self.stream.read()
+        self.stopped = False
+
+    def start(self):
+        # Run background daemon thread to constantly flush buffer and read latest frame
+        threading.Thread(target=self.update, args=(), daemon=True).start()
+        return self
+
+    def update(self):
+        while True:
+            if self.stopped:
+                return
+            # Constantly read to prevent OpenCV buffering bloat and FPS drops
+            (self.grabbed, self.frame) = self.stream.read()
+
+    def read(self):
+        return self.grabbed, self.frame
+
+    def stop(self):
+        self.stopped = True
+        self.stream.release()
+
+    def isOpened(self):
+        return self.stream.isOpened()
 
 class GestureController:
     """Hand gesture recognition using MediaPipe Tasks API."""
@@ -585,13 +622,8 @@ def main():
     w = 640
     h = 480
 
-    cap = cv2.VideoCapture(0)
-    cap.set(cv2.CAP_PROP_FRAME_WIDTH, w)
-    cap.set(cv2.CAP_PROP_FRAME_HEIGHT, h)
-    cap.set(cv2.CAP_PROP_FPS, 30)
-    cap.set(cv2.CAP_PROP_BUFFERSIZE, 1)  # Clear cache / remove backlog for fast tracking
-    # Use MJPG format which is much faster than YUYV for many webcams
-    cap.set(cv2.CAP_PROP_FOURCC, cv2.VideoWriter_fourcc(*'MJPG'))
+    # Initialize Threaded Video Stream
+    cap = WebcamVideoStream(src=0, width=w, height=h).start()
 
     detector = GestureController()
     frame_count = 0
@@ -691,12 +723,7 @@ def main():
                 cv2.imshow("SmartHand", wait_img)
                 cv2.waitKey(100)  # Force the window to render the text
                 
-                cap = cv2.VideoCapture(0)
-                cap.set(cv2.CAP_PROP_FRAME_WIDTH, w)
-                cap.set(cv2.CAP_PROP_FRAME_HEIGHT, h)
-                cap.set(cv2.CAP_PROP_FPS, 30)
-                cap.set(cv2.CAP_PROP_BUFFERSIZE, 1)  # Clear cache / remove backlog for fast tracking
-                cap.set(cv2.CAP_PROP_FOURCC, cv2.VideoWriter_fourcc(*'MJPG'))
+                cap = WebcamVideoStream(src=0, width=w, height=h).start()
                 print("  [TOGGLE] Camera turned ON")
             continue
 
@@ -837,14 +864,14 @@ def main():
             break
         elif key == ord('z'):
             camera_active = False
-            cap.release()
+            cap.stop()
             print("  [TOGGLE] Camera turned OFF")
             # Reset gesture hold state when turning off
             current_gesture_name = None
             hold_count = 0
 
     if cap.isOpened():
-        cap.release()
+        cap.stop()
     detector.close()
     cv2.destroyAllWindows()
 
