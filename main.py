@@ -12,7 +12,6 @@ import os
 import ctypes
 import sys
 import threading
-import keyboard
 
 # Set Windows AppUserModelID so the taskbar icon displays properly instead of the default python icon
 if sys.platform == "win32":
@@ -754,21 +753,8 @@ def main():
     gestures_active = True
     
     screen_w, screen_h = pyautogui.size()
-    
-    z_pressed_last = False
-    x_pressed_last = False
 
     while True:
-        # Global Hotkeys
-        z_pressed = keyboard.is_pressed('z')
-        x_pressed = keyboard.is_pressed('x')
-        
-        trigger_x = x_pressed and not x_pressed_last
-        trigger_z = z_pressed and not z_pressed_last
-        
-        x_pressed_last = x_pressed
-        z_pressed_last = z_pressed
-
         if not camera_active:
             # Display a blank screen if camera is off
             img = np.zeros((h, w, 3), dtype=np.uint8)
@@ -777,11 +763,11 @@ def main():
             cv2.putText(img, "Press 'z' to turn on", (w//2 - 110, h//2 + 20),
                         cv2.FONT_HERSHEY_SIMPLEX, 0.7, (200, 200, 200), 2)
             cv2.imshow("SmartHand", img)
-            cv2.waitKey(1)
+            key = cv2.waitKey(1) & 0xFF
             
-            if trigger_x:
+            if key == ord('x'):
                 break
-            elif trigger_z:
+            elif key == ord('z'):
                 camera_active = True
                 print("  [TOGGLE] Camera turning ON (Please wait...)")
                 
@@ -932,10 +918,10 @@ def main():
         cv2.imshow("SmartHand AI Controller", img)
         set_window_icon("SmartHand AI Controller")
 
-        cv2.waitKey(1)
-        if trigger_x:
+        key = cv2.waitKey(1) & 0xFF
+        if key == ord('x'):
             break
-        elif trigger_z:
+        elif key == ord('z'):
             camera_active = False
             cap.stop()
             print("  [TOGGLE] Camera turned OFF")
