@@ -116,9 +116,20 @@ To ensure maximum tracking accuracy, please refer to the correct hand posture an
 
 ---
 
-## 🛠️ Installation (Running from Source)
+## 📥 Quick Start (No Installation Required!)
 
-If you are sharing this code or setting it up on a new machine from scratch, follow these exact steps:
+The easiest way to use SmartHand on any Windows PC is to simply download the pre-built executable. You **do not** need to install Python or mess with the terminal!
+
+1. Go to the **Releases** section on the right side of this GitHub repository page.
+2. Download the latest `main.exe` file.
+3. Double-click `main.exe` to run the application!
+*(Note: Because this is a custom executable, Windows Defender might show a "Windows protected your PC" popup. Just click **More info** -> **Run anyway**).*
+
+---
+
+## 💻 Developer Setup (Running from Source)
+
+If you are a developer or want to modify the code from scratch, follow these exact steps:
 
 **Step 1: Download or Transfer the Files**
 If downloading from GitHub, click the green **Code -> Download ZIP** button on the repository page and extract the folder. 
