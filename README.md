@@ -168,9 +168,9 @@ pip install -r requirements.txt
 **Step 5: Run the App!**
 Once the installation finishes, you can start the application by typing:
 ```bash
-python main.py
+py main.py
 ```
-*(If that says command not found, try typing `py main.py` instead).*
+*(If that says command not found, try typing `python main.py` instead).*
 
 That's it! The camera should light up and the AI gesture HUD will appear on the screen.
 
