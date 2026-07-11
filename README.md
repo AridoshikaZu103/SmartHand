@@ -11,6 +11,7 @@ Control your entire computer operating system using in-air, high-speed hand gest
 - **Hardware Accelerated:** Uses DirectShow (`cv2.CAP_DSHOW`) and `MJPG` compression on a decoupled 640x480 hardware capture pipeline. This allows the AI models to process video blazingly fast without bogging down your CPU, guaranteeing 60 FPS performance!
 - **Hardware Agnostic HUD:** A dynamic, futuristic UI overlay tracks your real-time FPS, CPU utilization, RAM usage, and GPU load (using `psutil` and `GPUtil`, with graceful fallbacks for integrated Intel laptop GPUs).
 - **Hold-To-Trigger Logic:** Prevent accidental clicks! Gestures must be intentionally held for a set amount of frames before executing, backed by a visual progress bar and a global cooldown timer.
+- **Strict Dorsal Tracking:** The AI mathematically filters out your palm using cross-product vector math. Gestures will **ONLY** trigger when the **back of your hand** faces the camera, providing an extremely robust way to ignore accidental hand movements!
 - **Multi-Hand Combo System:** You are no longer limited to one hand. Combine specific shapes on your Left Hand and Right Hand to unlock hidden hotkeys and exponential control combinations!
 - **Global Toggles:** Instantly pause the entire camera system using the `'z'` key to save battery, or use your Left Pinky gesture to temporarily pause AI gesture tracking while keeping the camera live.
 
