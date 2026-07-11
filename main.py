@@ -13,6 +13,10 @@ import ctypes
 import sys
 import threading
 
+# Set Windows AppUserModelID so the taskbar icon displays properly instead of the default python icon
+myappid = 'smarthand.ai.controller.1.0'
+ctypes.windll.shell32.SetCurrentProcessExplicitAppUserModelID(myappid)
+
 # Disable pyautogui's pause and failsafe for responsive control
 pyautogui.FAILSAFE = False
 pyautogui.PAUSE = 0
@@ -720,7 +724,7 @@ def main():
                             cv2.FONT_HERSHEY_SIMPLEX, 1, (0, 255, 255), 2)
                 cv2.putText(wait_img, "(takes ~10 seconds)", (w//2 - 110, h//2 + 20),
                             cv2.FONT_HERSHEY_SIMPLEX, 0.7, (0, 200, 255), 2)
-                cv2.imshow("SmartHand", wait_img)
+                cv2.imshow("SmartHand AI Controller", wait_img)
                 cv2.waitKey(100)  # Force the window to render the text
                 
                 cap = WebcamVideoStream(src=0, width=w, height=h).start()
