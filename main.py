@@ -14,8 +14,9 @@ import sys
 import threading
 
 # Set Windows AppUserModelID so the taskbar icon displays properly instead of the default python icon
-myappid = 'smarthand.ai.controller.1.0'
-ctypes.windll.shell32.SetCurrentProcessExplicitAppUserModelID(myappid)
+if sys.platform == "win32":
+    myappid = 'smarthand.ai.controller.1.0'
+    ctypes.windll.shell32.SetCurrentProcessExplicitAppUserModelID(myappid)
 
 # Disable pyautogui's pause and failsafe for responsive control
 pyautogui.FAILSAFE = False
@@ -35,12 +36,13 @@ FINGER_TIP_INDICES = [4, 8, 12, 16, 20]
 
 def set_window_icon(window_name):
     """Forces Windows to apply the custom icon.ico to the OpenCV window."""
-    hwnd = ctypes.windll.user32.FindWindowW(None, window_name)
-    if hwnd:
-        hicon = ctypes.windll.user32.LoadImageW(0, ICON_PATH, 1, 0, 0, 0x0010)
-        if hicon:
-            ctypes.windll.user32.SendMessageW(hwnd, 0x0080, 0, hicon) # ICON_SMALL
-            ctypes.windll.user32.SendMessageW(hwnd, 0x0080, 1, hicon) # ICON_BIG
+    if sys.platform == "win32":
+        hwnd = ctypes.windll.user32.FindWindowW(None, window_name)
+        if hwnd:
+            hicon = ctypes.windll.user32.LoadImageW(0, ICON_PATH, 1, 0, 0, 0x0010)
+            if hicon:
+                ctypes.windll.user32.SendMessageW(hwnd, 0x0080, 0, hicon) # ICON_SMALL
+                ctypes.windll.user32.SendMessageW(hwnd, 0x0080, 1, hicon) # ICON_BIG
 
 # ─────────────────────────────────────────────────────────────
 # GESTURE MAP

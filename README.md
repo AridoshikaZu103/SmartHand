@@ -2,6 +2,9 @@
 
 Control your entire computer operating system using in-air, high-speed hand gestures! **SmartHand** uses a modern, state-of-the-art AI architecture capable of running at 60 FPS directly on standard laptop hardware.
 
+> [!IMPORTANT]
+> **💻 OS Compatibility:** SmartHand heavily utilizes Windows shell shortcuts (`Win+D`, `Alt+F4`, etc.) and Windows API hooks. Therefore, this application and its compiled executable (`main.exe`) are strictly designed for **64-bit Windows 10 and Windows 11**. It is *not* compatible with macOS or Linux!
+
 ## 🚀 Features
 
 - **Advanced AI Vision:** Completely migrated to Google's state-of-the-art **MediaPipe Tasks API**, running in a high-performance asynchronous `LIVE_STREAM` mode.
