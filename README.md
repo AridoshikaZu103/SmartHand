@@ -176,13 +176,15 @@ _The `hand_landmarker.task` AI model is automatically bundled directly into the 
 
 ## 📁 File Structure
 
-When sharing or working on the `main` application, this is the expected file structure (excluding `game.py` and its build scripts):
+When sharing or working on the `main` application, this is the complete expected file structure (excluding `game.py` and its build scripts):
 
 ```text
 SmartHand/
-├── main.py                 # The core AI hand gesture control application
-├── requirements.txt        # List of required Python libraries
-├── hand_landmarker.task    # The Google MediaPipe AI model file (CRITICAL)
-├── README.md               # This documentation file
-└── rebuild.ps1             # (Optional) PowerShell script to build the main.exe
+├── main.py                 # The core AI hand gesture control application script
+├── hand_landmarker.task    # The Google MediaPipe 3D AI model (CRITICAL to run)
+├── requirements.txt        # Contains all required Python packages and AI libraries
+├── run.ps1                 # Developer quick-start script to easily launch the app from source
+├── rebuild.ps1             # PowerShell script to automatically compile main.py into a .exe
+├── main.spec               # PyInstaller config that securely bundles the AI model into the .exe
+└── README.md               # This documentation file
 ```
