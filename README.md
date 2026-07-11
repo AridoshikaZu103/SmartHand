@@ -122,7 +122,7 @@ If you are sharing this code or setting it up on a new machine from scratch, fol
 
 **Step 1: Download or Transfer the Files**
 If downloading from GitHub, click the green **Code -> Download ZIP** button on the repository page and extract the folder. 
-Alternatively, copy the entire `hand_gesture_control` folder to the new computer via a USB drive or cloud storage.
+Alternatively, copy the entire `SmartHand` folder to the new computer via a USB drive or cloud storage.
 *(Note: The `hand_landmarker.task` file is ~8MB and will be included automatically in the GitHub download. If sharing manually, you can safely delete the `dist` and `build` folders before sharing to save space, but you **MUST** include the `hand_landmarker.task` file as it contains the AI model!)*
 
 **Step 2: Install Python**
@@ -132,7 +132,7 @@ Alternatively, copy the entire `hand_gesture_control` folder to the new computer
 4. You can verify the installation by opening your terminal (or Command Prompt) and typing `python --version` to see the installed version.
 
 **Step 3: Open the Terminal**
-1. Open the `hand_gesture_control` folder on the new computer.
+1. Open the `SmartHand` folder on the new computer.
 2. Click on the address bar at the top of the file explorer, type `cmd`, and hit **Enter**. This will open a black terminal window directly inside that folder.
 
 **Step 4: Install Dependencies**
@@ -168,7 +168,7 @@ _The `hand_landmarker.task` AI model is automatically bundled directly into the 
 When sharing or working on the `main` application, this is the expected file structure (excluding `game.py` and its build scripts):
 
 ```text
-hand_gesture_control/
+SmartHand/
 ├── main.py                 # The core AI hand gesture control application
 ├── requirements.txt        # List of required Python libraries
 ├── hand_landmarker.task    # The Google MediaPipe AI model file (CRITICAL)
