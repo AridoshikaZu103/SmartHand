@@ -122,7 +122,7 @@ The easiest way to use SmartHand on any Windows PC is to simply download the pre
 
 1. Go to the **Releases** section on the right side of this GitHub repository page.
 2. Download the latest `main.exe` file.
-3. Double-click `main.exe` to run the application!
+3. Right-click `main.exe` and select **"Run as administrator"** *(This is required for the hand gestures to control your keyboard globally!)*
 *(Note: Because this is a custom executable, Windows Defender might show a "Windows protected your PC" popup. Just click **More info** -> **Run anyway**).*
 
 ---
