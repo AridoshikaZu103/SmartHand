@@ -77,8 +77,8 @@ FINGER_TIP_INDICES = [4, 8, 12, 16, 20]
 #   'z' Key                       -> Camera On/Off
 # ─────────────────────────────────────────────────────────────
 
-# How many consecutive frames a gesture must be held to trigger
-HOLD_FRAMES = 5
+# How many consecutive frames a gesture must be held to trigger (Lowered for ultra-fast response)
+HOLD_FRAMES = 2
 # Cooldown in seconds after a gesture fires before it can fire again
 COOLDOWN_TIME = 1.0
 
@@ -121,7 +121,7 @@ class WebcamVideoStream:
 class GestureController:
     """Hand gesture recognition using MediaPipe Tasks API."""
 
-    def __init__(self, num_hands=2, min_detection_confidence=0.5, min_tracking_confidence=0.5):
+    def __init__(self, num_hands=2, min_detection_confidence=0.3, min_tracking_confidence=0.3):
         base_options = python.BaseOptions(model_asset_path=MODEL_PATH)
         options = vision.HandLandmarkerOptions(
             base_options=base_options,
