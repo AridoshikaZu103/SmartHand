@@ -191,9 +191,9 @@ class GestureController:
                 cross_product = (v1_x * v2_y) - (v1_y * v2_x)
                 
                 is_back_of_hand = False
-                if handedness == "Right" and cross_product < 0:
+                if handedness == "Right" and cross_product > 0:
                     is_back_of_hand = True
-                elif handedness == "Left" and cross_product > 0:
+                elif handedness == "Left" and cross_product < 0:
                     is_back_of_hand = True
                     
                 if not is_back_of_hand:
