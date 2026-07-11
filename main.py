@@ -750,7 +750,7 @@ def main():
     
     screen_w, screen_h = pyautogui.size()
     
-    PROCESS_EVERY_Nth_FRAME = 3 # 30 FPS camera -> 10 FPS AI processing
+    PROCESS_EVERY_Nth_FRAME = 4 # 30 FPS camera -> 7.5 FPS AI processing
     frame_count = 0
     hands_dict = {}
     gesture_name = None
