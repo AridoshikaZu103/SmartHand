@@ -1,7 +1,7 @@
 # -*- mode: python ; coding: utf-8 -*-
 from PyInstaller.utils.hooks import collect_all
 
-datas = [('hand_landmarker.task', '.'), ('icon.ico', '.')]
+datas = [('hand_landmarker.task', '.')]
 binaries = []
 hiddenimports = []
 tmp_ret = collect_all('mediapipe')
@@ -42,5 +42,4 @@ exe = EXE(
     target_arch=None,
     codesign_identity=None,
     entitlements_file=None,
-    icon=['icon.ico'],
 )
