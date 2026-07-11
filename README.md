@@ -176,7 +176,7 @@ _The `hand_landmarker.task` AI model is automatically bundled directly into the 
 
 ## 📁 File Structure
 
-When sharing or working on the `main` application, this is the complete expected file structure (excluding `game.py` and its build scripts):
+This is the complete expected file structure for the SmartHand application:
 
 ```text
 SmartHand/
