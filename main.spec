@@ -1,7 +1,7 @@
 # -*- mode: python ; coding: utf-8 -*-
 from PyInstaller.utils.hooks import collect_all
 
-datas = [('hand_landmarker.task', '.')]
+datas = [('hand_landmarker.task', '.'), ('icon.ico', '.')]
 binaries = []
 hiddenimports = []
 tmp_ret = collect_all('mediapipe')
