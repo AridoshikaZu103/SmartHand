@@ -754,8 +754,8 @@ def main():
     
     screen_w, screen_h = pyautogui.size()
     
-    #PROCESS_EVERY_Nth_FRAME = 2
-    #frame_count = 0
+    PROCESS_EVERY_Nth_FRAME = 2
+    frame_count = 0
 
     while True:
         if not camera_active:
@@ -787,15 +787,21 @@ def main():
                 
                 cap = WebcamVideoStream(src=0, width=w, height=h).start()
                 print("  [TOGGLE] Camera turned ON")
+                
+                # Grace period: prevent gestures from instantly firing the moment the camera turns on
+                # (gives the user time to put their hand down!)
+                last_action_time = time.time() + 2.0
+                current_gesture_name = None
+                hold_count = 0
             continue
 
         success, img = cap.read()
         if not success:
             continue
             
-        #frame_count += 1
-        #if frame_count % PROCESS_EVERY_Nth_FRAME != 0:
-        #    continue # Skip heavy processing and RAM storage for this frame
+        frame_count += 1
+        if frame_count % PROCESS_EVERY_Nth_FRAME != 0:
+            continue # Skip heavy processing and RAM storage for this frame
 
         # Force resize to w x h to drastically speed up processing 
         # (in case the camera ignores cap.set and feeds 1080p HD)
