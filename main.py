@@ -158,13 +158,14 @@ class GestureController:
     def _result_callback(self, result: vision.HandLandmarkerResult, output_image: mp.Image, timestamp_ms: int):
         self.latest_result = result
 
-    def process_frame(self, frame, timestamp_ms, draw=True):
+    def process_frame(self, frame, timestamp_ms, draw=True, skip_ai=False):
         """Detect hand landmarks in the frame async and optionally draw them from cached result."""
-        rgb_frame = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
-        mp_image = mp.Image(image_format=mp.ImageFormat.SRGB, data=rgb_frame)
-
-        # Send image to background worker
-        self.landmarker.detect_async(mp_image, timestamp_ms)
+        
+        if not skip_ai:
+            rgb_frame = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
+            mp_image = mp.Image(image_format=mp.ImageFormat.SRGB, data=rgb_frame)
+            # Send image to background worker
+            self.landmarker.detect_async(mp_image, timestamp_ms)
 
         self.detected_hands = []
         
@@ -749,8 +750,11 @@ def main():
     
     screen_w, screen_h = pyautogui.size()
     
-    PROCESS_EVERY_Nth_FRAME = 2
+    PROCESS_EVERY_Nth_FRAME = 3 # 30 FPS camera -> 10 FPS AI processing
     frame_count = 0
+    hands_dict = {}
+    gesture_name = None
+    gesture = None
 
     while True:
         if not camera_active:
@@ -795,8 +799,7 @@ def main():
             continue
             
         frame_count += 1
-        if frame_count % PROCESS_EVERY_Nth_FRAME != 0:
-            continue # Skip heavy processing and RAM storage for this frame
+        skip_ai = (frame_count % PROCESS_EVERY_Nth_FRAME != 0)
 
         # Force resize to w x h to drastically speed up processing 
         # (in case the camera ignores cap.set and feeds 1080p HD)
@@ -806,20 +809,22 @@ def main():
         # The previous 'frame_count * (1000 / 30)' forced the tracker out of sync with actual camera FPS!
         timestamp_ms = int(time.perf_counter() * 1000)
 
-        img = detector.process_frame(img, timestamp_ms)
-        hands_dict, right_index_pos = detector.get_all_fingers_raised()
+        img = detector.process_frame(img, timestamp_ms, skip_ai=skip_ai)
         
-        gesture = match_gesture(hands_dict)
-        
-        # If paused, ignore everything EXCEPT the unpause gesture
-        if not gestures_active and gesture and gesture[1] != "toggle_gestures":
-            gesture = None
+        if not skip_ai:
+            hands_dict, right_index_pos = detector.get_all_fingers_raised()
             
-        gesture_name = gesture[0] if gesture else None
-        
-        # If neutral, we don't trigger actions, but we still display it
-        if gesture and gesture[1] == "neutral":
-            gesture = None
+            gesture = match_gesture(hands_dict)
+            
+            # If paused, ignore everything EXCEPT the unpause gesture
+            if not gestures_active and gesture and gesture[1] != "toggle_gestures":
+                gesture = None
+                
+            gesture_name = gesture[0] if gesture else None
+            
+            # If neutral, we don't trigger actions, but we still display it
+            if gesture and gesture[1] == "neutral":
+                gesture = None
 
 
         now = time.time()
