@@ -11,6 +11,7 @@ numpy
 
 # System Interaction (Keyboard/Mouse Control)
 pyautogui
+keyboard
 
 # Hardware Monitoring (HUD Statistics)
 GPUtil

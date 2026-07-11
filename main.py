@@ -12,6 +12,7 @@ import os
 import ctypes
 import sys
 import threading
+import keyboard
 
 # Set Windows AppUserModelID so the taskbar icon displays properly instead of the default python icon
 if sys.platform == "win32":
@@ -201,9 +202,15 @@ class GestureController:
                 # -------------------------
 
                 if draw:
-                    drawing_utils.draw_landmarks(
-                        frame, hand_landmarks, self.hand_connections
-                    )
+                    # Draw custom X-RAY bones (cyan)
+                    if self.hand_connections:
+                        for connection in self.hand_connections:
+                            start_idx = connection[0]
+                            end_idx = connection[1]
+                            if start_idx < len(hand_landmarks) and end_idx < len(hand_landmarks):
+                                start_pt = (int(hand_landmarks[start_idx].x * w), int(hand_landmarks[start_idx].y * h))
+                                end_pt = (int(hand_landmarks[end_idx].x * w), int(hand_landmarks[end_idx].y * h))
+                                cv2.line(frame, start_pt, end_pt, (255, 255, 0), 2, cv2.LINE_AA) # Cyan bones
 
                 coord_x_list = []
                 coord_y_list = []
@@ -214,13 +221,21 @@ class GestureController:
                     coord_y_list.append(py)
                     landmark_list.append([idx, px, py])
                     if draw:
-                        cv2.circle(frame, (px, py), 5, (255, 0, 255), cv2.FILLED)
+                        # Draw glowing joints
+                        cv2.circle(frame, (px, py), 6, (255, 200, 0), cv2.FILLED) # Outer glow
+                        cv2.circle(frame, (px, py), 3, (255, 255, 255), cv2.FILLED) # Inner core
 
                 if draw and coord_x_list:
                     x_min, x_max = min(coord_x_list), max(coord_x_list)
                     y_min, y_max = min(coord_y_list), max(coord_y_list)
+                    # Medical HUD bounding box (cyan)
                     cv2.rectangle(frame, (x_min - 20, y_min - 20),
-                                  (x_max + 20, y_max + 20), (0, 255, 0), 2)
+                                  (x_max + 20, y_max + 20), (255, 255, 0), 1)
+                    # Add corner brackets for X-Ray tech look
+                    cv2.line(frame, (x_min - 20, y_min - 20), (x_min - 10, y_min - 20), (255, 255, 0), 3)
+                    cv2.line(frame, (x_min - 20, y_min - 20), (x_min - 20, y_min - 10), (255, 255, 0), 3)
+                    cv2.line(frame, (x_max + 20, y_max + 20), (x_max + 10, y_max + 20), (255, 255, 0), 3)
+                    cv2.line(frame, (x_max + 20, y_max + 20), (x_max + 20, y_max + 10), (255, 255, 0), 3)
                                   
                 self.detected_hands.append({
                     "handedness": handedness,
@@ -739,8 +754,21 @@ def main():
     gestures_active = True
     
     screen_w, screen_h = pyautogui.size()
+    
+    z_pressed_last = False
+    x_pressed_last = False
 
     while True:
+        # Global Hotkeys
+        z_pressed = keyboard.is_pressed('z')
+        x_pressed = keyboard.is_pressed('x')
+        
+        trigger_x = x_pressed and not x_pressed_last
+        trigger_z = z_pressed and not z_pressed_last
+        
+        x_pressed_last = x_pressed
+        z_pressed_last = z_pressed
+
         if not camera_active:
             # Display a blank screen if camera is off
             img = np.zeros((h, w, 3), dtype=np.uint8)
@@ -749,10 +777,11 @@ def main():
             cv2.putText(img, "Press 'z' to turn on", (w//2 - 110, h//2 + 20),
                         cv2.FONT_HERSHEY_SIMPLEX, 0.7, (200, 200, 200), 2)
             cv2.imshow("SmartHand", img)
-            key = cv2.waitKey(1) & 0xFF
-            if key == ord('x'):
+            cv2.waitKey(1)
+            
+            if trigger_x:
                 break
-            elif key == ord('z'):
+            elif trigger_z:
                 camera_active = True
                 print("  [TOGGLE] Camera turning ON (Please wait...)")
                 
@@ -903,10 +932,10 @@ def main():
         cv2.imshow("SmartHand AI Controller", img)
         set_window_icon("SmartHand AI Controller")
 
-        key = cv2.waitKey(1) & 0xFF
-        if key == ord('x'):
+        cv2.waitKey(1)
+        if trigger_x:
             break
-        elif key == ord('z'):
+        elif trigger_z:
             camera_active = False
             cap.stop()
             print("  [TOGGLE] Camera turned OFF")
