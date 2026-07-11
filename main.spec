@@ -30,7 +30,6 @@ exe = EXE(
     a.datas,
     [],
     name='main',
-    icon='icon.ico',
     debug=False,
     bootloader_ignore_signals=False,
     strip=False,
