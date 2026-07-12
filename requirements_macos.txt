@@ -1,16 +1,17 @@
 # ==============================================================================
 # SmartHand - Python Dependencies (macOS Version)
+# Compatible with Python 3.9 - 3.14
 # ==============================================================================
 
 # Computer Vision & AI Models
-opencv-python
-mediapipe
+opencv-python>=4.8.0
+mediapipe>=0.10.0
 
 # Math & Data Processing
-numpy
+numpy>=1.21.0
 
 # System Interaction (Keyboard/Mouse Control - macOS compatible)
-pynput
+pynput>=1.7.6
 
 # Hardware Monitoring (HUD Statistics)
-psutil
+psutil>=5.9.0
