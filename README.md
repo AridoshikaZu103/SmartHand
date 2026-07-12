@@ -127,6 +127,14 @@ To ensure maximum tracking accuracy, please refer to the correct hand posture an
 | **Middle + Ring + Pinky**         | **Index + Middle**                | **[MACRO] Open PowerShell Seq.**    |
 | **Middle + Ring + Pinky**         | **Index + Middle + Ring**         | `Ctrl + Shift + Win + b`            |
 
+### ⚙️ Global Keyboard Hotkeys
+
+If you need to quickly manage the SmartHand application while running:
+
+* **`z` Key:** Toggle Camera On/Off
+* **`x` Key:** Quit SmartHand (must have the camera window focused)
+* **`c` Key:** Flush Camera Buffer (Press this if the camera feed starts to lag, it instantly restores max FPS!)
+
 ---
 
 ## 📥 Quick Start (No Installation Required!)

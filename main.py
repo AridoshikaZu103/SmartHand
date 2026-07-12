@@ -93,6 +93,8 @@ def set_window_icon(window_name):
 #
 # GLOBAL:
 #   'z' Key                       -> Camera On/Off
+#   'x' Key                       -> Quit
+#   'c' Key                       -> Flush Camera Buffer
 # ─────────────────────────────────────────────────────────────
 
 # How many consecutive frames a gesture must be held to trigger (Lowered for ultra-fast response)
@@ -684,7 +686,8 @@ def main():
     print(f"Hold gesture for {HOLD_FRAMES} frames to trigger.")
     print(f"Cooldown: {COOLDOWN_TIME}s between actions.")
     print(f"GLOBAL TOGGLE: Press 'z' on keyboard to turn Camera On/Off.\n")
-    print(f"To QUIT: Press 'x' on keyboard while camera window is focused.\n")
+    print(f"To QUIT: Press 'x' on keyboard while camera window is focused.")
+    print(f"To FLUSH CACHE: Press 'c' to instantly clear buffer and restore FPS.\n")
     print("RIGHT HAND gestures:")
     print("  All open / All closed     -> NEUTRAL (no action)")
     print("  Thumb + Index             -> Right Arrow")
@@ -936,6 +939,11 @@ def main():
             
         if key == ord('x'):
             break
+        elif key == ord('c'):
+            print("  [REFRESH] Flushing camera buffer to restore FPS...")
+            if hasattr(cap, 'stream'):
+                for _ in range(5):
+                    cap.stream.grab()
         elif key == ord('z'):
             camera_active = False
             cap.stop()
