@@ -6,4 +6,5 @@ build/game/
 dist/*.exe
 __pycache__/
 *.pyc
-build_macos.sh
+*sh
+build
