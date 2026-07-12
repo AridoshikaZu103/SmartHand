@@ -3,7 +3,7 @@
 Control your entire computer operating system using in-air, high-speed hand gestures! **SmartHand** uses a modern, state-of-the-art AI architecture capable of running at 60 FPS directly on standard laptop hardware.
 
 > [!IMPORTANT]
-> **💻 OS Compatibility:** SmartHand heavily utilizes Windows shell shortcuts (`Win+D`, `Alt+F4`, etc.) and Windows API hooks. Therefore, this application and its compiled executable (`main.exe`) are strictly designed for **64-bit Windows 10 and Windows 11**. It is *not* compatible with macOS or Linux!
+> **💻 OS Compatibility:** SmartHand natively supports both **Windows** and **macOS**! Due to deep OS-level keyboard/mouse hooks, each operating system uses its own dedicated launcher script (`main.py` for Windows, `main_macos.py` for macOS). Linux support is currently experimental.
 
 ## 🚀 Features
 
@@ -143,6 +143,19 @@ The easiest way to use SmartHand on any Windows PC is to simply download the pre
 
 ---
 
+## 🍎 macOS Quick Start (Standalone App)
+
+You can share the compiled macOS application (`SmartHand.app`) with friends so they don't need to install Python! 
+
+1. Share the `dist/SmartHand.app` folder with your friend.
+2. Because the app is not signed by an Apple Developer account, macOS will show an "Unidentified Developer" warning if they double-click it. 
+3. **To bypass this:**
+   - **Method A:** Right-click `SmartHand.app` in Finder, click **Open**, and click **Open** again in the security dialog.
+   - **Method B (Terminal):** Run `xattr -d com.apple.quarantine /path/to/SmartHand.app` to remove the security block.
+   - **Method C (Direct):** Open the terminal and run the executable directly: `./SmartHand.app/Contents/MacOS/SmartHand`.
+
+---
+
 ## 💻 Developer Setup (Running from Source)
 
 If you are a developer or want to modify the code from scratch, follow these exact steps:
@@ -180,16 +193,50 @@ That's it! The camera should light up and the AI gesture HUD will appear on the 
 
 ---
 
+## 🍏 macOS Developer Setup (Running from Source)
+
+The macOS version utilizes `pynput` instead of `pyautogui` for OS-level control.
+
+**Step 1: Install Python 3.14 (or compatible 3.9+)**
+Download Python for macOS. Ensure you are using the correct Python binary. *Warning for Anaconda users: Conda's base environment often overrides the `python3` command (e.g., pointing it to 3.9 instead of 3.14). To ensure you use the correct version, explicitly type `python3.14` or run `conda deactivate` first!*
+
+**Step 2: Install Dependencies**
+Open your terminal in the SmartHand folder and run:
+```bash
+python3.14 -m pip install -r requirements_macos.txt
+```
+
+**Step 3: Run the App!**
+```bash
+python3.14 main_macos.py
+```
+*(Note: The first launch takes 10-20 seconds to load the AI models into memory).*
+
+---
+
 ## 📦 Building an Executable
 
-To build the application into a standalone Windows `.exe` that doesn't require Python installation, simply run the build script:
+### 🪟 Windows (.exe)
+To build the application into a standalone Windows `.exe` that doesn't require Python installation, simply run:
 ```powershell
 .\rebuild.ps1
 ```
+
+### 🍎 macOS (.app)
+To bundle the application for macOS, use the provided shell script:
+```bash
+chmod +x build_macos.sh
+./build_macos.sh
+```
+> [!TIP]
+> **Crash Fix:** If your `.app` crashes upon double-clicking but works perfectly via the terminal, ensure your PyInstaller build script is using the `--onefile` flag instead of `--onedir`!
+> 
+> **Custom Icon:** To add a custom icon, use Homebrew to install ImageMagick (`brew install imagemagick`), convert your PNG (`convert icon.png -define icon:auto-resize=256,128,96,64,48,32,16 SmartHand.icns`), and add `--icon=SmartHand.icns` to the PyInstaller command.
+
 > [!CAUTION]
 > ⏳ **Note:** This process bundles massive AI models and libraries into a single file. It is completely normal for this to take **4 to 5 minutes**. Do not close the terminal!
 
-_The `hand_landmarker.task` AI model is automatically bundled directly into the executable by PyInstaller!_
+_The `hand_landmarker.task` AI model is automatically bundled directly into the executable/app by PyInstaller!_
 
 ---
 
@@ -199,11 +246,15 @@ This is the complete expected file structure for the SmartHand application:
 
 ```text
 SmartHand/
-├── main.py                 # The core AI hand gesture control application script
+├── main.py                 # The core Windows AI hand gesture control application script
+├── main_macos.py           # The core macOS script (uses pynput instead of pyautogui)
 ├── hand_landmarker.task    # The Google MediaPipe 3D AI model (CRITICAL to run)
-├── requirements.txt        # Contains all required Python packages and AI libraries
-├── run.ps1                 # Developer quick-start script to easily launch the app from source
-├── rebuild.ps1             # PowerShell script to automatically compile main.py into a .exe
-├── main.spec               # PyInstaller config that securely bundles the AI model into the .exe
+├── requirements.txt        # Windows Python dependencies
+├── requirements_macos.txt  # macOS Python dependencies 
+├── run.ps1                 # Windows Developer quick-start script
+├── run_macos.sh            # macOS Developer quick-start script
+├── rebuild.ps1             # PowerShell script to compile main.py into a .exe
+├── build_macos.sh          # Bash script to compile main_macos.py into a macOS .app
+├── main.spec               # PyInstaller config for Windows
 └── README.md               # This documentation file
 ```
