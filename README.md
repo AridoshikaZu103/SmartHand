@@ -224,6 +224,8 @@ python3.14 main_macos.py
 
 ## 📦 Building an Executable
 
+![PyInstaller](Images/pyinstaller.png)
+
 To get started, you will need to install PyInstaller using Python's package manager (pip). Here are the quick steps to download and verify it:
 
 ### 📥 Installation Steps
