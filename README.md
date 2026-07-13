@@ -21,7 +21,7 @@ Control your entire computer operating system using in-air, high-speed hand gest
 
 SmartHand is specifically engineered to run at **true 30/60 FPS** with **zero latency**, even on older or budget hardware. We achieve this by bypassing standard computer vision bottlenecks:
 
-- **Asynchronous Daemon Threading:** Standard OpenCV pipelines are notorious for buffering old video frames, which causes heavy lag (often dropping to ~12 FPS) while the AI processes. SmartHand bypasses this by running a custom background daemon thread that constantly flushes the camera buffer, guaranteeing the AI *always* processes the most instantaneous, real-time frame.
+- **Asynchronous Daemon Threading:** Standard OpenCV pipelines are notorious for buffering old video frames, which causes heavy lag (often dropping to ~12 FPS) while the AI processes. SmartHand bypasses this by running a custom background daemon thread that constantly flushes the camera buffer, guaranteeing the AI _always_ processes the most instantaneous, real-time frame.
 - **Ultra-Low Memory Footprint (The "8GB Fix"):** By completely eliminating the OpenCV frame backlog, the application's RAM footprint stays incredibly small. Whether your laptop has **8GB, 16GB, or 32GB of RAM**, SmartHand guarantees zero memory leaks or bloat, making it 100% future-proof for any system!
 
 ---
@@ -44,12 +44,14 @@ When both your hands are on the screen, the AI tracks **42 physical landmarks** 
 <div align="center">
 
 ### ✅ Correct Hand Posture
+
 <img src="Images/CORRECT%20HAND%20POSTURE.png" width="400">
 <br>*Maintain clear visibility of all fingers*
 
 <br>
 
 ### ✋ Dorsal View Requirement
+
 <img src="Images/(dorsal%20side)%20of%20both%20hands.png" width="400">
 <br>*The AI mathematically filters out palm-facing gestures*
 
@@ -141,9 +143,9 @@ When both your hands are on the screen, the AI tracks **42 physical landmarks** 
 
 If you need to quickly manage the SmartHand application while running:
 
-* **`z` Key:** Toggle Camera On/Off
-* **`x` Key:** Quit SmartHand (must have the camera window focused)
-* **`c` Key:** Flush Camera Buffer (Press this if the camera feed starts to lag, it instantly restores max FPS!)
+- **`z` Key:** Toggle Camera On/Off
+- **`x` Key:** Quit SmartHand (must have the camera window focused)
+- **`c` Key:** Flush Camera Buffer (Press this if the camera feed starts to lag, it instantly restores max FPS!)
 
 ---
 
@@ -153,20 +155,20 @@ The easiest way to use SmartHand on any Windows PC is to simply download the pre
 
 1. Go to the **Releases** section on the right side of this GitHub repository page.
 2. Download the latest `main.exe` file.
-3. Right-click `main.exe` and select **"Run as administrator"** *(This is required for the hand gestures to control your keyboard globally!)*
-> [!CAUTION]
-> ⏳ **Please be patient!** The 3D AI models are very large, so it is completely normal for `main.exe` to take **10 to 20 seconds** to load and appear on your screen after clicking.
+3. Right-click `main.exe` and select **"Run as administrator"** _(This is required for the hand gestures to control your keyboard globally!)_
+   > [!CAUTION]
+   > ⏳ **Please be patient!** The 3D AI models are very large, so it is completely normal for `main.exe` to take **10 to 20 seconds** to load and appear on your screen after clicking.
 
-*(Note: Because this is a custom executable, Windows Defender might show a "Windows protected your PC" popup. Just click **More info** -> **Run anyway**).*
+_(Note: Because this is a custom executable, Windows Defender might show a "Windows protected your PC" popup. Just click **More info** -> **Run anyway**)._
 
 ---
 
 ## 🍎 macOS Quick Start (Standalone App)
 
-You can share the compiled macOS application (`SmartHand.app`) with friends so they don't need to install Python! 
+You can share the compiled macOS application (`SmartHand.app`) with friends so they don't need to install Python!
 
 1. Share the `dist/SmartHand.app` folder with your friend.
-2. Because the app is not signed by an Apple Developer account, macOS will show an "Unidentified Developer" warning if they double-click it. 
+2. Because the app is not signed by an Apple Developer account, macOS will show an "Unidentified Developer" warning if they double-click it.
 3. **To bypass this:**
    - **Method A:** Right-click `SmartHand.app` in Finder, click **Open**, and click **Open** again in the security dialog.
    - **Method B (Terminal):** Run `xattr -d com.apple.quarantine /path/to/SmartHand.app` to remove the security block.
@@ -179,33 +181,39 @@ You can share the compiled macOS application (`SmartHand.app`) with friends so t
 If you are a developer or want to modify the code from scratch, follow these exact steps:
 
 **Step 1: Download or Transfer the Files**
-If downloading from GitHub, click the green **Code -> Download ZIP** button on the repository page and extract the folder. 
+If downloading from GitHub, click the green **Code -> Download ZIP** button on the repository page and extract the folder.
 Alternatively, copy the entire `SmartHand` folder to the new computer via a USB drive or cloud storage.
-*(Note: The `hand_landmarker.task` file is ~8MB and will be included automatically in the GitHub download. If sharing manually, you can safely delete the `dist` and `build` folders before sharing to save space, but you **MUST** include the `hand_landmarker.task` file as it contains the AI model!)*
+_(Note: The `hand_landmarker.task` file is ~8MB and will be included automatically in the GitHub download. If sharing manually, you can safely delete the `dist` and `build` folders before sharing to save space, but you **MUST** include the `hand_landmarker.task` file as it contains the AI model!)_
 
 **Step 2: Install Python**
-1. Go to [python.org/downloads](https://www.python.org/downloads/) and download the latest version of Python for Windows *(Any recent version of Python 3 will work perfectly!)*.
+
+1. Go to [python.org/downloads](https://www.python.org/downloads/) and download the latest version of Python for Windows _(Any recent version of Python 3 will work perfectly!)_.
 2. Open the installer. **CRITICAL STEP:** Before clicking "Install Now", make sure to check the box at the bottom that says **"Add Python to PATH"**. If you forget this, the terminal commands won't work!
 3. Click "Install Now" and wait for it to finish.
 4. You can verify the installation by opening your terminal (or Command Prompt) and typing `python --version` to see the installed version.
 
 **Step 3: Open the Terminal**
+
 1. Open the `SmartHand` folder on the new computer.
 2. Click on the address bar at the top of the file explorer, type `cmd`, and hit **Enter**. This will open a black terminal window directly inside that folder.
 
 **Step 4: Install Dependencies**
 In that black terminal window, copy and paste this command and hit Enter:
+
 ```bash
 pip install -r requirements.txt
 ```
-*This will download all the required AI models (MediaPipe, OpenCV) and control libraries (PyAutoGUI). It might take a minute or two.*
+
+_This will download all the required AI models (MediaPipe, OpenCV) and control libraries (PyAutoGUI). It might take a minute or two._
 
 **Step 5: Run the App!**
 Once the installation finishes, you can start the application by typing:
+
 ```bash
 py main.py
 ```
-*(If that says command not found, try typing `python main.py` instead).*
+
+_(If that says command not found, try typing `python main.py` instead)._
 
 That's it! The camera should light up and the AI gesture HUD will appear on the screen.
 
@@ -216,19 +224,22 @@ That's it! The camera should light up and the AI gesture HUD will appear on the 
 The macOS version utilizes `pynput` instead of `pyautogui` for OS-level control.
 
 **Step 1: Install Python 3.14 (or compatible 3.9+)**
-Download Python for macOS. Ensure you are using the correct Python binary. *Warning for Anaconda users: Conda's base environment often overrides the `python3` command (e.g., pointing it to 3.9 instead of 3.14). To ensure you use the correct version, explicitly type `python3.14` or run `conda deactivate` first!*
+Download Python for macOS. Ensure you are using the correct Python binary. _Warning for Anaconda users: Conda's base environment often overrides the `python3` command (e.g., pointing it to 3.9 instead of 3.14). To ensure you use the correct version, explicitly type `python3.14` or run `conda deactivate` first!_
 
 **Step 2: Install Dependencies**
 Open your terminal in the SmartHand folder and run:
+
 ```bash
 python3.14 -m pip install -r requirements_macos.txt
 ```
 
 **Step 3: Run the App!**
+
 ```bash
 python3.14 main_macos.py
 ```
-*(Note: The first launch takes 10-20 seconds to load the AI models into memory).*
+
+_(Note: The first launch takes 10-20 seconds to load the AI models into memory)._
 
 ---
 
@@ -239,32 +250,41 @@ python3.14 main_macos.py
 To get started, you will need to install PyInstaller using Python's package manager (pip). Here are the quick steps to download and verify it:
 
 ### 📥 Installation Steps
+
 Open your terminal or command prompt and run the following command:
+
 ```bash
 pip install pyinstaller
-``` 
+```
 
 ### 🔍 Verify the Installation
+
 To confirm it downloaded correctly and check the version, run:
+
 ```bash
 pyinstaller --version
 ```
 
 ### 🪟 Windows (.exe)
+
 To build the application into a standalone Windows `.exe` that doesn't require Python installation, simply run:
+
 ```powershell
 .\rebuild.ps1
 ```
 
 ### 🍎 macOS (.app)
+
 To bundle the application for macOS, use the provided shell script:
+
 ```bash
 chmod +x build_macos.sh
 ./build_macos.sh
 ```
+
 > [!TIP]
 > **Crash Fix:** If your `.app` crashes upon double-clicking but works perfectly via the terminal, ensure your PyInstaller build script is using the `--onefile` flag instead of `--onedir`!
-> 
+>
 > **Custom Icon:** To add a custom icon, use Homebrew to install ImageMagick (`brew install imagemagick`), convert your PNG (`convert icon.png -define icon:auto-resize=256,128,96,64,48,32,16 SmartHand.icns`), and add `--icon=SmartHand.icns` to the PyInstaller command.
 
 > [!CAUTION]
@@ -284,7 +304,7 @@ SmartHand/
 ├── main_macos.py           # The core macOS script (uses pynput instead of pyautogui)
 ├── hand_landmarker.task    # The Google MediaPipe 3D AI model (CRITICAL to run)
 ├── requirements.txt        # Windows Python dependencies
-├── requirements_macos.txt  # macOS Python dependencies 
+├── requirements_macos.txt  # macOS Python dependencies
 ├── run.ps1                 # Windows Developer quick-start script
 ├── run_macos.sh            # macOS Developer quick-start script
 ├── rebuild.ps1             # PowerShell script to compile main.py into a .exe
@@ -298,14 +318,17 @@ SmartHand/
 ## 🛠️ Troubleshooting & FAQ
 
 ### 1. The Looping/Crashing Issue (Opening and closing repeatedly)
+
 When a python file is compiled into a standalone `.exe` using PyInstaller, it can get stuck in an infinite loop (spawning endless copies of itself) if the script uses `multiprocessing` either directly or indirectly (via libraries like `mediapipe`). Windows does not have a native `fork()` method, so child processes start by re-running the main script from the top.
 
 **Fix:** We call `multiprocessing.freeze_support()` inside the `if __name__ == '__main__':` block. This tells PyInstaller to stop child processes from running the main code again.
 
 ### 2. The Pip Install Error (`error: externally-managed-environment`)
+
 If you or a friend tries to run `pip install -r requirements.txt` and gets this error, it means you are using a Linux-like environment on Windows (specifically MSYS2 / MinGW Python or a newer Python version that strictly enforces PEP 668). This restricts installing packages globally to prevent breaking the system environment.
 
 **Fix:** You have three options:
+
 1. **Force the installation:** Run the pip install command with the `--break-system-packages` flag:
    ```cmd
    pip install -r requirements.txt --break-system-packages
@@ -319,7 +342,9 @@ If you or a friend tries to run `pip install -r requirements.txt` and gets this 
 3. **Install Standard Python:** Uninstall MSYS2 Python and download the normal Windows installer from the official website (python.org). The standard Windows installer doesn't have this restriction by default.
 
 ### 3. FPS Drops & Memory Leaks
+
 If the camera feed starts to lag, pressing the **`c`** key will flush the camera buffer and instantly restore max FPS. Under the hood, this also calls `gc.collect()` to manually force Python's Garbage Collector to free up any lingering memory from OpenCV or MediaPipe buffers!
 
 ### 4. Does my friend need to install PyInstaller or Python?
+
 **No.** Since you are compiling the code into a standalone `.exe` file, your friend doesn't need to install PyInstaller, Python, or any packages at all. That's the magic of PyInstaller—it bundles everything the program needs into that single `.exe` file! Just send them the executable and they can double-click to run it.
