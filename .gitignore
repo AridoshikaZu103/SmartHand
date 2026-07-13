@@ -8,3 +8,7 @@ __pycache__/
 *.pyc
 build
 Asphalt_8_Airborne_with_SmartHand.md
+requirements_ASUS.txt
+ASUS_TUF_Gaming.md
+ASUS.py
+run_ASUS.ps1

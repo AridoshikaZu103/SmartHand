@@ -13,6 +13,7 @@ import ctypes
 import sys
 import threading
 import gc
+import ASUS
 
 # Set Windows AppUserModelID so the taskbar icon displays properly instead of the default python icon
 if sys.platform == "win32":
@@ -682,6 +683,13 @@ def main():
 
     detector = GestureController()
     frame_count = 0
+
+    print("\n" + "=" * 40)
+    try:
+        ASUS.check_asus_hardware()
+    except Exception as e:
+        print(f"ASUS Hardware check skipped: {e}")
+    print("=" * 40)
 
     print("\n=== SmartHand Gesture Controller ===")
     print(f"Hold gesture for {HOLD_FRAMES} frames to trigger.")
