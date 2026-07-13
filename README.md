@@ -266,3 +266,34 @@ SmartHand/
 ├── main.spec               # PyInstaller config for Windows
 └── README.md               # This documentation file
 ```
+
+---
+
+## 🛠️ Troubleshooting & FAQ
+
+### 1. The Looping/Crashing Issue (Opening and closing repeatedly)
+When a python file is compiled into a standalone `.exe` using PyInstaller, it can get stuck in an infinite loop (spawning endless copies of itself) if the script uses `multiprocessing` either directly or indirectly (via libraries like `mediapipe`). Windows does not have a native `fork()` method, so child processes start by re-running the main script from the top.
+
+**Fix:** We call `multiprocessing.freeze_support()` inside the `if __name__ == '__main__':` block. This tells PyInstaller to stop child processes from running the main code again.
+
+### 2. The Pip Install Error (`error: externally-managed-environment`)
+If you or a friend tries to run `pip install -r requirements.txt` and gets this error, it means you are using a Linux-like environment on Windows (specifically MSYS2 / MinGW Python or a newer Python version that strictly enforces PEP 668). This restricts installing packages globally to prevent breaking the system environment.
+
+**Fix:** You have three options:
+1. **Force the installation:** Run the pip install command with the `--break-system-packages` flag:
+   ```cmd
+   pip install -r requirements.txt --break-system-packages
+   ```
+2. **Use a Virtual Environment:** Create and activate a virtual environment before installing:
+   ```cmd
+   python -m venv venv
+   .\venv\Scripts\activate
+   pip install -r requirements.txt
+   ```
+3. **Install Standard Python:** Uninstall MSYS2 Python and download the normal Windows installer from the official website (python.org). The standard Windows installer doesn't have this restriction by default.
+
+### 3. FPS Drops & Memory Leaks
+If the camera feed starts to lag, pressing the **`c`** key will flush the camera buffer and instantly restore max FPS. Under the hood, this also calls `gc.collect()` to manually force Python's Garbage Collector to free up any lingering memory from OpenCV or MediaPipe buffers!
+
+### 4. Does my friend need to install PyInstaller or Python?
+**No.** Since you are compiling the code into a standalone `.exe` file, your friend doesn't need to install PyInstaller, Python, or any packages at all. That's the magic of PyInstaller—it bundles everything the program needs into that single `.exe` file! Just send them the executable and they can double-click to run it.
