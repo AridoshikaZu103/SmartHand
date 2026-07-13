@@ -43,7 +43,9 @@ When both your hands are on the screen, the AI tracks **42 physical landmarks** 
 
 | ✅ Correct Hand Posture | ✋ Dorsal View Requirement |
 | :---: | :---: |
-| <img src="Images/CORRECT%20HAND%20POSTURE.png" width="400"><br>*Maintain clear visibility of all fingers* | <img src="Images/(dorsal%20side)%20of%20both%20hands.png" width="400"><br>*The AI mathematically filters out palm-facing gestures* |
+| <img src="Images/CORRECT%20HAND%20POSTURE.png" width="400"><br>*Maintain clear visibility of all fingers* | <img 
+
+src="Images/(dorsal%20side)%20of%20both%20hands.png" width="400"><br>*The AI mathematically filters out palm-facing gestures* |
 
 ### ➡️ Right Hand (Primary Controls)
 
