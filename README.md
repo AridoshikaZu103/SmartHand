@@ -230,7 +230,7 @@ To get started, you will need to install PyInstaller using Python's package mana
 Open your terminal or command prompt and run the following command:
 ```bash
 pip install pyinstaller
-```
+``` 
 
 ### 🔍 Verify the Installation
 To confirm it downloaded correctly and check the version, run:
