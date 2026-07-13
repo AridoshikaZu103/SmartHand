@@ -15,3 +15,6 @@ pyautogui
 # Hardware Monitoring (HUD Statistics)
 GPUtil
 psutil
+
+# Build & Distribution
+pyinstaller
