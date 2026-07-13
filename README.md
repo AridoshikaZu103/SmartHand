@@ -41,9 +41,26 @@ When both your hands are on the screen, the AI tracks **42 physical landmarks** 
 > [!IMPORTANT]
 > **Dorsal Angle Tracking:** To ensure maximum tracking accuracy, gestures will **only** trigger when the back of your hand (dorsal side) is facing the camera.
 
-| <img src="Images/CORRECT%20HAND%20POSTURE.png" width="100%"> | **✋ Dorsal View Requirement** |
-| :---: | :---: |
-| **✅ Correct Hand Posture**<br>_Maintain clear visibility of all fingers_ | <img src="Images/(dorsal%20side)%20of%20both%20hands.png" width="100%"><br>_The AI mathematically filters out palm-facing gestures_ |
+<table align="center" width="100%">
+  <tr>
+    <td align="center" width="50%">
+      <img src="Images/CORRECT%20HAND%20POSTURE.png" width="100%">
+    </td>
+    <td align="center" width="50%">
+      <br><br><b>✋ Dorsal View Requirement</b>
+    </td>
+  </tr>
+  <tr>
+    <td align="center" width="50%">
+      <br><b>✅ Correct Hand Posture</b><br>
+      <i>Maintain clear visibility of all fingers</i>
+    </td>
+    <td align="center" width="50%">
+      <img src="Images/(dorsal%20side)%20of%20both%20hands.png" width="100%"><br>
+      <i>The AI mathematically filters out palm-facing gestures</i>
+    </td>
+  </tr>
+</table>
 
 ### ➡️ Right Hand (Primary Controls)
 
