@@ -224,6 +224,20 @@ python3.14 main_macos.py
 
 ## 📦 Building an Executable
 
+To get started, you will need to install PyInstaller using Python's package manager (pip). Here are the quick steps to download and verify it:
+
+### 📥 Installation Steps
+Open your terminal or command prompt and run the following command:
+```bash
+pip install pyinstaller
+```
+
+### 🔍 Verify the Installation
+To confirm it downloaded correctly and check the version, run:
+```bash
+pyinstaller --version
+```
+
 ### 🪟 Windows (.exe)
 To build the application into a standalone Windows `.exe` that doesn't require Python installation, simply run:
 ```powershell
