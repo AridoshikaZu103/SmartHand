@@ -12,6 +12,7 @@ import os
 import ctypes
 import sys
 import threading
+import gc
 
 # Set Windows AppUserModelID so the taskbar icon displays properly instead of the default python icon
 if sys.platform == "win32":
@@ -944,6 +945,7 @@ def main():
             if hasattr(cap, 'stream'):
                 for _ in range(5):
                     cap.stream.grab()
+            gc.collect()
         elif key == ord('z'):
             camera_active = False
             cap.stop()
