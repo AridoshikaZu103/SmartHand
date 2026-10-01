@@ -13,7 +13,6 @@ import ctypes
 import sys
 import threading
 import gc
-import ASUS
 
 # Set Windows AppUserModelID so the taskbar icon displays properly instead of the default python icon
 if sys.platform == "win32":
